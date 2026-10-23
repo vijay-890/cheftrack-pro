@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Volume2, CheckCircle2, Search } from "lucide-react";
 
 export default function RecipesView({ recipes, user, lang, onCompleteRecipe, speakingIndex, onReadSteps }) {

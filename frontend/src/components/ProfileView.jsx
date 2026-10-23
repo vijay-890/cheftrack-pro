@@ -1,7 +1,6 @@
-import React from "react";
-import { User, Award, ShieldCheck, Mail } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
-export default function ProfileView({ user, lang }) {
+export default function ProfileView({ user }) {
   return (
     <div style={{ maxWidth: "800px", margin: "0 auto", padding: "32px 16px" }}>
       <div style={{ background: "#1e293b", padding: "32px", borderRadius: "16px", border: "1px solid #334155" }}>

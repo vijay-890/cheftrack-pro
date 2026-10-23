@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { 
   Volume2, Play, Pause, RotateCcw, ArrowLeft, CheckCircle2, 
   Timer, Mic, MicOff, ShoppingBag, CheckSquare, Square, 
-  Star, MessageSquare, Send, Flame, Sparkles, HelpCircle
+  Star, MessageSquare, Send, Flame, Sparkles
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { useAuth } from "../context/AuthContext";
@@ -79,17 +79,23 @@ export default function RecipeDetail({ lang }) {
   // Kitchen Timer logic
   useEffect(() => {
     let interval = null;
+    let finishTimer = null;
     if (isTimerRunning && timerSeconds > 0) {
       interval = setInterval(() => setTimerSeconds((prev) => prev - 1), 1000);
-    } else if (timerSeconds === 0) {
-      setIsTimerRunning(false);
-      alert("⏱️ Timer Finished! Step check completed.");
+    } else if (isTimerRunning && timerSeconds === 0) {
+      finishTimer = window.setTimeout(() => {
+        setIsTimerRunning(false);
+        alert("⏱️ Timer Finished! Step check completed.");
+      }, 0);
     }
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      window.clearTimeout(finishTimer);
+    };
   }, [isTimerRunning, timerSeconds]);
 
   // Speech Output Reader
-  const handleSpeakCurrentStep = (stepIndex = currentStep) => {
+  const handleSpeakCurrentStep = useCallback((stepIndex = currentStep) => {
     if (!recipe || !window.speechSynthesis) return;
     window.speechSynthesis.cancel();
     
@@ -99,7 +105,7 @@ export default function RecipeDetail({ lang }) {
     utterance.onend = () => setIsSpeaking(false);
     setIsSpeaking(true);
     window.speechSynthesis.speak(utterance);
-  };
+  }, [recipe, lang, currentStep]);
 
   // Hands-free Voice Input Recognition
   useEffect(() => {
@@ -139,7 +145,7 @@ export default function RecipeDetail({ lang }) {
 
     recognition.onerror = () => setIsListening(false);
     recognitionRef.current = recognition;
-  }, [recipe, lang]);
+  }, [recipe, lang, handleSpeakCurrentStep]);
 
   const toggleVoiceCommands = () => {
     if (!recognitionRef.current) {

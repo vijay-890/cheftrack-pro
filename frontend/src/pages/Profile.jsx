@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ShieldCheck, Award, Download, CheckCircle2, Sparkles, ChefHat } from "lucide-react";
+import { useState } from "react";
+import { ShieldCheck, Award, Download, CheckCircle2 } from "lucide-react";
 import { jsPDF } from "jspdf";
 import { useAuth } from "../context/AuthContext";
 

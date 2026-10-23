@@ -1,5 +1,5 @@
-import React from "react";
-import { Trophy, Flame, Award, ArrowRight, CheckCircle2 } from "lucide-react";
+
+import { Trophy, Flame, ArrowRight, CheckCircle2 } from "lucide-react";
 
 export default function DashboardView({ user, lang, onExploreRecipes }) {
   return (
