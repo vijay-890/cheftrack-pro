@@ -28,20 +28,20 @@ export default function RecipesHub({ lang }) {
           <p style={{ color: "#94a3b8", fontSize: "14px", marginTop: "4px" }}>Click on a dish to open the Interactive Cooking Studio</p>
         </div>
 
-        <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-          <div style={{ background: "#1e293b", padding: "4px", borderRadius: "8px", display: "flex" }}>
-            <button onClick={() => setTier("beginner")} style={{ padding: "8px 16px", borderRadius: "6px", background: tier === "beginner" ? "#f97316" : "transparent", color: "white", fontSize: "13px", fontWeight: "600" }}>Beginner</button>
-            <button onClick={() => setTier("intermediate")} style={{ padding: "8px 16px", borderRadius: "6px", background: tier === "intermediate" ? "#f97316" : "transparent", color: "white", fontSize: "13px", fontWeight: "600" }}>Intermediate</button>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center", justifyContent: "flex-end", width: "min(100%, 460px)" }}>
+          <div style={{ background: "#1e293b", padding: "4px", borderRadius: "8px", display: "flex", flexWrap: "wrap", maxWidth: "100%" }}>
+            <button onClick={() => setTier("beginner")} style={{ padding: "8px 12px", borderRadius: "6px", background: tier === "beginner" ? "#f97316" : "transparent", color: "white", fontSize: "13px", fontWeight: "600", whiteSpace: "nowrap" }}>Beginner</button>
+            <button onClick={() => setTier("intermediate")} style={{ padding: "8px 12px", borderRadius: "6px", background: tier === "intermediate" ? "#f97316" : "transparent", color: "white", fontSize: "13px", fontWeight: "600", whiteSpace: "nowrap" }}>Intermediate</button>
           </div>
 
-          <div style={{ background: "#1e293b", borderRadius: "8px", padding: "6px 12px", display: "flex", alignItems: "center", border: "1px solid #334155" }}>
+          <div style={{ background: "#1e293b", borderRadius: "8px", padding: "6px 12px", display: "flex", flex: "1 1 180px", minWidth: "0", alignItems: "center", border: "1px solid #334155" }}>
             <Search size={16} color="#94a3b8" style={{ marginRight: "6px" }} />
-            <input type="text" placeholder="Search dish..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ background: "transparent", border: "none", color: "white", outline: "none", fontSize: "13px" }} />
+            <input type="text" placeholder="Search dish..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ background: "transparent", border: "none", color: "white", outline: "none", fontSize: "13px", minWidth: "0", width: "100%" }} />
           </div>
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "24px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 320px), 1fr))", gap: "24px" }}>
         {filtered.map((r) => {
           const isCompleted = user.completedRecipes?.includes(r.recipeId);
           const isLocked = tier === "beginner" && r.level > user.currentLevel;
